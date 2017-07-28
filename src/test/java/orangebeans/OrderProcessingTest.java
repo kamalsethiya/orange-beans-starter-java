@@ -79,4 +79,16 @@ public class OrderProcessingTest {
 
 		service.placeOrder(order);
 	}
+	
+	@Test
+	public void ProcessOrderWithoutOfferTest() {
+		OrderService service = new OrderService();
+		Order order = new Order();
+		Product product = new Product("T-Shirt", 100);
+		order.getProducts().put(product, 1);
+
+		service.placeOrder(order);
+
+		assertThat(product.getPrice(), is(100f));
+	}
 }
