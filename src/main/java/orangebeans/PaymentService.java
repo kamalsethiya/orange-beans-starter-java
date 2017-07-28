@@ -2,6 +2,7 @@ package orangebeans;
 
 import orangebeans.models.Order;
 import orangebeans.models.Product;
+import orangebeans.util.PromotionProcessor;
 
 public class PaymentService {
 
