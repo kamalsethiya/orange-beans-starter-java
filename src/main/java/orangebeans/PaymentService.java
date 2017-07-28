@@ -5,17 +5,18 @@ import orangebeans.models.Product;
 
 public class PaymentService {
 
-    PaymentGateway gateway = new PaymentGateway();
+	PaymentGateway gateway = new PaymentGateway();
 
-    public String processPayment(Order order) {
-        float total = 0;
+	public String processPayment(Order order) {
+		float total = 0;
 
+		PromotionProcessor.processPromotions(order);
+		for (Product product : order.getProducts().keySet()) {
+			int quantity = order.getProducts().get(product);
+			total += product.getPrice() * quantity;
+		}
 
-        for (Product product : order.getProducts().keySet()) {
-            int quantity = order.getProducts().get(product);
-            total += product.getPrice() * quantity;
-        }
+		return "PR-" + gateway.initiatePayment(total, order.getId());
+	}
 
-        return "PR-" + gateway.initiatePayment(total, order.getId());
-    }
 }

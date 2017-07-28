@@ -1,8 +1,9 @@
 package orangebeans.repo;
 
-import orangebeans.models.Order;
-
+import java.util.Collection;
 import java.util.HashMap;
+
+import orangebeans.models.Order;
 
 public class OrderRepository {
 
@@ -19,8 +20,17 @@ public class OrderRepository {
     }
 
     public Order getOrderByPaymentReference(String paymentReference) {
-        return orders.values().stream()
-                .filter(o -> o.getPaymentReference() == paymentReference)
-                .findFirst().get();
+    	final Collection<Order> values = orders.values();
+    	Order orderByPaymentReference = null;
+    	for(Order order : values){
+    		if(order.getPaymentReference().equalsIgnoreCase(paymentReference)){
+    			orderByPaymentReference = order;
+    			break;
+    		}
+    	}
+    	return orderByPaymentReference;
+		// return orders.values().stream()
+		// .filter(o -> o.getPaymentReference() == paymentReference)
+		// .findFirst().get();
     }
 }
